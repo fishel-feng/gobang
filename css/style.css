@@ -1,5 +1,42 @@
 canvas {
-    display: block;
-    margin: 50px auto;
-    box-shadow: -2px -2px 2px #efefef, 5px 5px 5px #b9b9b9;
+  display: block;
+  margin: 50px auto;
+  box-shadow: -2px -2px 2px #efefef, 5px 5px 5px #b9b9b9;
+}
+
+.first {
+  z-index: -1;
+  position: absolute;
+  margin-left: -200px;
+  margin-top: 20px;
+  left: 50%;
+  opacity: .1;
+  background: white;
+  height: 400px;
+  width: 200px;
+  border: black solid 5px;
+  border-right: black solid 200px;
+  border-radius: 50%;
+}
+
+.second {
+  position: relative;
+  left: 100px;
+  background: white;
+  height: 200px;
+  width: 200px;
+  border: black solid 90px;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.third {
+  position: relative;
+  left: 100px;
+  height: 200px;
+  width: 200px;
+  border: white solid 90px;
+  background: black;
+  border-radius: 50%;
+  box-sizing: border-box;
 }
