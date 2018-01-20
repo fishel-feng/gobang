@@ -1,0 +1,24 @@
+{
+  "name": "gobang",
+  "version": "1.0.0",
+  "description": "html5,css3练习小程序，一个五子棋小游戏，目前仅实现人机对战",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fx109138/gobang.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fx109138/gobang/issues"
+  },
+  "homepage": "https://github.com/fx109138/gobang#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "socket.io": "^2.0.4"
+  }
+}
