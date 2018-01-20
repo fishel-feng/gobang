@@ -9,17 +9,18 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="container">
-  <canvas id="chess"></canvas>
+<div class="header">
+
 </div>
-</body>
-<script type="text/javascript" src="js/script.js"></script>
+<div id="text-container">欢迎游戏，请选择游戏模式</div>
+<canvas id="chess"></canvas>
+<div class="button-container">
+  <div id="computer">人机对战</div>
+  <div id="person">人人对战</div>
+</div>
 <script src="js/socket.io.js"></script>
-<script>
-  // var socket = io.connect('http://localhost:5001');
-  // socket.on('message', function (data) {
-  //   console.log(data);
-  //   socket.emit('back', 'world');
-  // });
-</script>
+<script src="js/script.js"></script>
+<script src="js/computer.js"></script>
+<script src="js/person.js"></script>
+</body>
 </html>

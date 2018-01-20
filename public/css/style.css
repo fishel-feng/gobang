@@ -5,6 +5,22 @@ html,body{
 
 canvas {
   display: block;
-  margin: 50px auto;
+  margin: 40px auto;
   box-shadow: -2px -2px 2px #efefef, 5px 5px 5px #b9b9b9;
+}
+
+#text-container{
+  text-shadow:2px 2px 2px grey;
+  color: gold;
+  margin-top: 30px;
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.button-container{
+  font-size: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
