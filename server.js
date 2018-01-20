@@ -17,11 +17,18 @@ io.on('connection', function (socket) {
   if (count % 2 === 1) {
     socket.emit('waiting', count);
   } else {
-    if (socketMap[(count - 1)]){
+    if (socketMap[(count - 1)]) {
       socketMap[(count - 1)].emit("first");
       socket.emit("second");
-    }else {
+    } else {
       socket.emit("leave");
     }
   }
+  socket.on('go', function (i, j, myNum) {
+    if (myNum % 2 === 1) {
+      socketMap[(myNum + 1)].emit("go", i, j);
+    } else {
+      socketMap[(myNum - 1)].emit("go", i, j);
+    }
+  });
 });

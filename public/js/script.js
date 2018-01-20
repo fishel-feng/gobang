@@ -8,6 +8,8 @@ var person = document.getElementById('person');
 canvas.width = canvasWidth;
 canvas.height = canvasHeight;
 
+var myHand = false;
+
 var over = false;
 var i = 0, j = 0;
 var chessBoard = [];
@@ -18,7 +20,8 @@ for (i = 0; i < 15; i++) {
   }
 }
 
-var me = true;
+var me = false;
+var isComputer;
 context.strokeStyle = '#9f7a59';
 context.lineWidth = 2;
 var boxWidth = (canvasWidth - 10) / 15;
@@ -89,15 +92,20 @@ canvas.onclick = function (e) {
     }
     if (!over) {
       me = !me;
-      computerAI();
+      if (isComputer) {
+        computerAI();
+      } else {
+        personGo(i, j);
+      }
     }
   }
 };
 
 computer.onclick = function (e) {
-  console.log('c');
+  isComputer = true;
 };
 
 person.onclick = function (e) {
+  isComputer = false;
   personPlay();
 };
