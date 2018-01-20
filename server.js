@@ -24,11 +24,18 @@ io.on('connection', function (socket) {
       socket.emit("leave");
     }
   }
-  socket.on('go', function (i, j, myNum) {
+  socket.on('go', function (i, j, myNum, isFail) {
     if (myNum % 2 === 1) {
       socketMap[(myNum + 1)].emit("go", i, j);
     } else {
       socketMap[(myNum - 1)].emit("go", i, j);
+    }
+    if (isFail) {
+      if (myNum % 2 === 1) {
+        socketMap[(myNum + 1)].emit("fail");
+      } else {
+        socketMap[(myNum - 1)].emit("fail");
+      }
     }
   });
 });

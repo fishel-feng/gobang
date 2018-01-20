@@ -1,65 +1,3 @@
-var i = 0, j = 0, k = 0;
-// 赢法数组
-var wins = [];
-// 赢法数量
-var count = 0;
-// 人的赢法统计数组
-var myWin = [];
-// ai的赢法统计数组
-var computerWin = [];
-
-// 初始化赢法数组
-for (i = 0; i < 15; i++) {
-  wins[i] = [];
-  for (j = 0; j < 15; j++) {
-    wins[i][j] = [];
-  }
-}
-
-
-// 遍历横，纵，正对角线，反对角线四种赢法
-for (i = 0; i < 15; i++) {
-  for (j = 0; j < 11; j++) {
-    for (k = 0; k < 5; k++) {
-      wins[i][j + k][count] = true;
-    }
-    count++;
-  }
-}
-
-for (i = 0; i < 15; i++) {
-  for (j = 0; j < 11; j++) {
-    for (k = 0; k < 5; k++) {
-      wins[j + k][i][count] = true;
-    }
-    count++;
-  }
-}
-
-for (i = 0; i < 11; i++) {
-  for (j = 0; j < 11; j++) {
-    for (k = 0; k < 5; k++) {
-      wins[i + k][j + k][count] = true;
-    }
-    count++;
-  }
-}
-
-for (i = 0; i < 11; i++) {
-  for (j = 14; j > 3; j--) {
-    for (k = 0; k < 5; k++) {
-      wins[i + k][j - k][count] = true;
-    }
-    count++;
-  }
-}
-
-// 初始化赢法统计数组
-for (i = 0; i < count; i++) {
-  myWin[i] = 0;
-  computerWin[i] = 0;
-}
-
 function computerAI() {
   var myScore = [];
   var computerScore = [];
@@ -88,13 +26,13 @@ function computerAI() {
             } else if (myWin[k] === 4) {
               myScore[i][j] += 10000;
             }
-            if (computerWin[k] === 1) {
+            if (rivalWin[k] === 1) {
               computerScore[i][j] += 220;
-            } else if (computerWin[k] === 2) {
+            } else if (rivalWin[k] === 2) {
               computerScore[i][j] += 420;
-            } else if (computerWin[k] === 3) {
+            } else if (rivalWin[k] === 3) {
               computerScore[i][j] += 2100;
-            } else if (computerWin[k] === 4) {
+            } else if (rivalWin[k] === 4) {
               computerScore[i][j] += 20000;
             }
           }
@@ -126,10 +64,10 @@ function computerAI() {
   chessBoard[u][v] = 2;
   for (k = 0; k < count; k++) {
     if (wins[u][v][k]) {
-      computerWin[k]++;
+      rivalWin[k]++;
       myWin[k] = 6;
-      if (computerWin[k] === 5) {
-        window.alert("你输了");
+      if (rivalWin[k] === 5) {
+        showResult('你输了');
         over = true;
       }
     }
