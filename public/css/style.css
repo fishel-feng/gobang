@@ -1,26 +1,38 @@
-html,body{
+html, body {
   padding: 0;
   margin: 0;
 }
 
+body {
+  background: url("../images/bg.jpeg");
+}
+
 canvas {
+  background: rgba(255, 255, 255, .7);
   display: block;
   margin: 40px auto;
   box-shadow: -2px -2px 2px #efefef, 5px 5px 5px #b9b9b9;
 }
 
-#text-container{
-  text-shadow:2px 2px 2px grey;
-  color: gold;
+#text-container {
+  text-shadow: 2px 2px 2px grey;
+  color: black;
   margin-top: 30px;
   font-size: 25px;
   display: flex;
   justify-content: center;
 }
 
-.button-container{
-  font-size: 20px;
+.button-container {
+  font-size: 16px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+}
+
+.button-container > div {
+  padding: 8px;
+  background: dodgerblue;
+  color: #ffffff;
+  border-radius: 5px;
 }

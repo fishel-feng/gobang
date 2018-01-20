@@ -19,7 +19,7 @@ io.on('connection', function (socket) {
   } else {
     if (socketMap[(count - 1)]) {
       socketMap[(count - 1)].emit("first");
-      socket.emit("second");
+      socket.emit("second", count);
     } else {
       socket.emit("leave");
     }

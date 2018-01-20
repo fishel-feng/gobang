@@ -8,8 +8,6 @@ var person = document.getElementById('person');
 canvas.width = canvasWidth;
 canvas.height = canvasHeight;
 
-var myHand = false;
-
 var over = false;
 var i = 0, j = 0;
 var chessBoard = [];
