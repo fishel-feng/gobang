@@ -1,4 +1,3 @@
-var socket;
 var waiting = false;
 
 function personPlay() {
@@ -25,15 +24,15 @@ function personPlay() {
   });
   socket.on('fail', function () {
     showDialog('你输了,再开一局？', function () {
-      // todo
+      socket.disconnect();
       reset();
-      me = true;
+      personPlay();
     });
     over = true;
   });
   socket.on('leave', function () {
     showDialog('对方离开，是否重新匹配？', function () {
-      socket.emit('disconnect');
+      reset();
       personPlay();
     });
   });

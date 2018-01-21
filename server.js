@@ -22,6 +22,7 @@ io.on('connection', function (socket) {
   number++;
   socket.clientNum = number;
   socketMap[number] = socket;
+  console.log('join--' + number);
   if (number % 2 === 1) {
     socket.emit('waiting', number);
   } else {
@@ -39,12 +40,14 @@ io.on('connection', function (socket) {
     }
   });
   socket.on("disconnect", function () {
+    console.log('leave--' + socket.clientNum);
     delete(socketMap[socket.clientNum]);
-    if (number % 2 === 0 && socketMap[getMatch(socket.clientNum)]) {
+    if (socket.clientNum % 2 !== 0) {
+      number++;
+    }
+    if (socketMap[getMatch(socket.clientNum)]) {
       socketMap[getMatch(socket.clientNum)].emit('leave');
       delete(socketMap[getMatch(socket.clientNum)]);
-    } else {
-      number++;
     }
   });
 });

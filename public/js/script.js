@@ -14,6 +14,8 @@ var btnOk = document.getElementById('btn_ok');
 
 var ROW_COUNT = 15;
 
+var socket;
+
 canvas.width = canvasWidth;
 canvas.height = canvasHeight;
 // var show = document.getElementById('show');
@@ -118,8 +120,15 @@ canvas.onclick = function (e) {
         if (myWin[k] === 5) {
           textContainer.innerText = '游戏结束';
           showDialog('你赢了,再开一局？', function () {
-            reset();
-            me = true;
+            if (isComputer) {
+              reset();
+              me = true;
+            }
+            if (!isComputer) {
+              socket.disconnect();
+              reset();
+              personPlay();
+            }
           });
           if (!isComputer) {
             personGo(i, j, true);
@@ -140,13 +149,22 @@ canvas.onclick = function (e) {
 };
 
 computer.onclick = function () {
-  textContainer.innerText = '游戏开始';
+  // todo
   if (!over) {
-    showDialog('确定放弃本局,重开一局？', function () {
-      isComputer = true;
-      reset();
-    });
+    if (isComputer) {
+      showDialog('确定放弃本局,重开一局？', function () {
+        textContainer.innerText = '游戏开始';
+        reset();
+      });
+    } else {
+      showDialog('确定放弃本局,重开一局？', function () {
+        socket.disconnect();
+        isComputer = true;
+        reset();
+      });
+    }
   } else {
+    textContainer.innerText = '游戏开始';
     isComputer = true;
     reset();
   }
@@ -155,16 +173,21 @@ computer.onclick = function () {
 person.onclick = function () {
   if (waiting) {
     showDialog('是否放弃等待，重新匹配？', function () {
-      // todo
+      socket.disconnect();
+      personPlay();
     });
-  }
-  if(!over){
-    showDialog('确定逃跑，重开一局？', function () {
-      // todo
+  } else if (!over) {
+    showDialog('确定放弃本局,重开一局？', function () {
+      socket.disconnect();
+      reset();
+      personPlay();
     });
+  } else {
+    isComputer = false;
+    over = false;
+    reset();
+    personPlay();
   }
-  isComputer = false;
-  personPlay();
 };
 
 function traverseWin() {
