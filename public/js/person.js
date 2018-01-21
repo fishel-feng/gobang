@@ -1,9 +1,11 @@
 var waiting = false;
 
+// 联机游戏
 function personPlay() {
-  socket = io.connect('http://192.168.0.115:5001');
+  socket = io.connect('http://127.0.0.1:5001');
   socket.on('waiting', function () {
     waiting = true;
+    me = false;
     textContainer.innerText = '等待玩家进入';
   });
   socket.on('first', function () {
@@ -14,6 +16,7 @@ function personPlay() {
   });
   socket.on('second', function () {
     textContainer.innerText = '游戏开始,等待对方落子';
+    me = false;
     over = false;
   });
   socket.on('go', function (i, j) {
@@ -31,6 +34,7 @@ function personPlay() {
     over = true;
   });
   socket.on('leave', function () {
+    over = true;
     showDialog('对方离开，是否重新匹配？', function () {
       reset();
       personPlay();
@@ -38,6 +42,7 @@ function personPlay() {
   });
 }
 
+// 落子
 function personGo(i, j, isFail) {
   socket.emit('go', i, j, isFail);
   textContainer.innerText = '等待对方落子';

@@ -1,3 +1,4 @@
+// ai算法
 function computerAI() {
   var myScore = [];
   var computerScore = [];

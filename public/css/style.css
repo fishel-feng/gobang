@@ -37,6 +37,10 @@ canvas {
   border-radius: 5px;
 }
 
+.button-container > div:active{
+  opacity: .8;
+}
+
 #dialog {
   font-weight: bolder;
   top: 240px;

@@ -3,31 +3,24 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
+// 存放在线用户k-编号v-socket
 var socketMap = {};
+// 自增编号
 var number = 0;
 
 server.listen(5001);
 
 app.use(express.static('public'));
 
-function getMatch(num) {
-  if (num % 2 === 1) {
-    return num + 1;
-  } else {
-    return num - 1;
-  }
-}
-
 io.on('connection', function (socket) {
   number++;
   socket.clientNum = number;
   socketMap[number] = socket;
-  console.log('join--' + number);
   if (number % 2 === 1) {
     socket.emit('waiting', number);
   } else {
-    if (socketMap[(number - 1)]) {
-      socketMap[(number - 1)].emit("first");
+    if (socketMap[number - 1]) {
+      socketMap[number - 1].emit("first");
       socket.emit("second", number);
     } else {
       socket.emit("leave");
@@ -40,9 +33,8 @@ io.on('connection', function (socket) {
     }
   });
   socket.on("disconnect", function () {
-    console.log('leave--' + socket.clientNum);
     delete(socketMap[socket.clientNum]);
-    if (socket.clientNum % 2 !== 0) {
+    if (socket.clientNum % 2 !== 0 && !socketMap[getMatch(socket.clientNum)]) {
       number++;
     }
     if (socketMap[getMatch(socket.clientNum)]) {
@@ -51,3 +43,12 @@ io.on('connection', function (socket) {
     }
   });
 });
+
+// 从1开始，奇数匹配加一的数，偶数匹配减一的数
+function getMatch(num) {
+  if (num % 2 === 1) {
+    return num + 1;
+  } else {
+    return num - 1;
+  }
+}

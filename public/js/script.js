@@ -18,10 +18,6 @@ var socket;
 
 canvas.width = canvasWidth;
 canvas.height = canvasHeight;
-// var show = document.getElementById('show');
-// show.onclick = function (ev) {
-//   reset();
-// };
 
 var over = true;
 var i = 0, j = 0, k = 0;
@@ -61,6 +57,7 @@ window.onload = function () {
   drawChessBoard();
 };
 
+// 绘制棋盘
 function drawChessBoard() {
   context.strokeStyle = '#9f7a59';
   context.lineWidth = 2;
@@ -75,6 +72,7 @@ function drawChessBoard() {
   }
 }
 
+// 落子
 function oneStep(i, j, me) {
   context.beginPath();
   context.arc(realPadding + i * boxWidth, realPadding + j * boxWidth, radius, 0, 2 * Math.PI);
@@ -148,8 +146,8 @@ canvas.onclick = function (e) {
   }
 };
 
+// 点击人机对战
 computer.onclick = function () {
-  // todo
   if (!over) {
     if (isComputer) {
       showDialog('确定放弃本局,重开一局？', function () {
@@ -170,6 +168,8 @@ computer.onclick = function () {
   }
 };
 
+
+// 点击联网对战
 person.onclick = function () {
   if (waiting) {
     showDialog('是否放弃等待，重新匹配？', function () {
@@ -178,6 +178,7 @@ person.onclick = function () {
     });
   } else if (!over) {
     showDialog('确定放弃本局,重开一局？', function () {
+      isComputer = false;
       socket.disconnect();
       reset();
       personPlay();
@@ -190,6 +191,7 @@ person.onclick = function () {
   }
 };
 
+// 遍历横，纵，正对角线，反对角线四种赢法
 function traverseWin() {
   for (i = 0; i < ROW_COUNT; i++) {
     for (j = 0; j < ROW_COUNT - 4; j++) {
@@ -228,6 +230,7 @@ function traverseWin() {
   }
 }
 
+// 显示dialog
 function showDialog(result, ok) {
   dialogTitle.innerText = result;
   btnOk.innerText = '确定';
@@ -242,6 +245,7 @@ function showDialog(result, ok) {
   dialog.showModal();
 }
 
+// 初始化
 function initParams() {
   // 初始化棋盘
   for (i = 0; i < ROW_COUNT; i++) {
@@ -257,6 +261,7 @@ function initParams() {
   }
 }
 
+// 重置棋盘
 function reset() {
   context.clearRect(0, 0, canvasWidth, canvasHeight);
   initParams();
