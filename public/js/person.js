@@ -1,20 +1,20 @@
 var socket;
-var myNum;
+var waiting = false;
 
 function personPlay() {
   socket = io.connect('http://192.168.0.115:5001');
-  socket.on('waiting', function (count, num) {
-    textContainer.innerText = '等待玩家进入，当前在线' + count + '人';
-    myNum = num;
+  socket.on('waiting', function () {
+    waiting = true;
+    textContainer.innerText = '等待玩家进入';
   });
   socket.on('first', function () {
     textContainer.innerText = '游戏开始,请落子';
+    waiting = false;
     me = true;
     over = false;
   });
-  socket.on('second', function (count, num) {
+  socket.on('second', function () {
     textContainer.innerText = '游戏开始,等待对方落子';
-    myNum = num;
     over = false;
   });
   socket.on('go', function (i, j) {
@@ -25,17 +25,21 @@ function personPlay() {
   });
   socket.on('fail', function () {
     showDialog('你输了,再开一局？', function () {
+      // todo
       reset();
       me = true;
     });
     over = true;
   });
   socket.on('leave', function () {
-    textContainer.innerText = '对方掉线';
+    showDialog('对方离开，是否重新匹配？', function () {
+      socket.emit('disconnect');
+      personPlay();
+    });
   });
 }
 
 function personGo(i, j, isFail) {
-  socket.emit('go', i, j, myNum, isFail);
+  socket.emit('go', i, j, isFail);
   textContainer.innerText = '等待对方落子';
 }

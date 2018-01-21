@@ -139,7 +139,7 @@ canvas.onclick = function (e) {
   }
 };
 
-computer.onclick = function (e) {
+computer.onclick = function () {
   textContainer.innerText = '游戏开始';
   if (!over) {
     showDialog('确定放弃本局,重开一局？', function () {
@@ -152,7 +152,17 @@ computer.onclick = function (e) {
   }
 };
 
-person.onclick = function (e) {
+person.onclick = function () {
+  if (waiting) {
+    showDialog('是否放弃等待，重新匹配？', function () {
+      // todo
+    });
+  }
+  if(!over){
+    showDialog('确定逃跑，重开一局？', function () {
+      // todo
+    });
+  }
   isComputer = false;
   personPlay();
 };
@@ -198,12 +208,12 @@ function traverseWin() {
 function showDialog(result, ok) {
   dialogTitle.innerText = result;
   btnOk.innerText = '确定';
-  btnOk.onclick = function (e) {
+  btnOk.onclick = function () {
     ok();
     dialog.close();
   };
   btnBack.innerText = '取消';
-  btnBack.onclick = function (e) {
+  btnBack.onclick = function () {
     dialog.close();
   };
   dialog.showModal();
