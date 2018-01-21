@@ -1,20 +1,21 @@
-var textContainer = document.getElementById('text-container');
 var socket;
 var myNum;
 
 function personPlay() {
   socket = io.connect('http://192.168.0.115:5001');
-  socket.on('waiting', function (count) {
+  socket.on('waiting', function (count, num) {
     textContainer.innerText = '等待玩家进入，当前在线' + count + '人';
-    myNum = count;
+    myNum = num;
   });
   socket.on('first', function () {
     textContainer.innerText = '游戏开始,请落子';
     me = true;
+    over = false;
   });
-  socket.on('second', function (count) {
+  socket.on('second', function (count, num) {
     textContainer.innerText = '游戏开始,等待对方落子';
-    myNum = count;
+    myNum = num;
+    over = false;
   });
   socket.on('go', function (i, j) {
     oneStep(i, j, false);
@@ -23,7 +24,10 @@ function personPlay() {
     textContainer.innerText = '请落子';
   });
   socket.on('fail', function () {
-    showResult('你输了');
+    showDialog('你输了,再开一局？', function () {
+      reset();
+      me = true;
+    });
     over = true;
   });
   socket.on('leave', function () {

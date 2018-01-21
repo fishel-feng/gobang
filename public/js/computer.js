@@ -67,7 +67,11 @@ function computerAI() {
       rivalWin[k]++;
       myWin[k] = 6;
       if (rivalWin[k] === 5) {
-        showResult('你输了');
+        textContainer.innerText = '游戏结束';
+        showDialog('你输了,再开一局？', function () {
+          reset();
+          me = true;
+        });
         over = true;
       }
     }
