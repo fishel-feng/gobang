@@ -37,7 +37,7 @@ canvas {
   border-radius: 5px;
 }
 
-.button-container > div:active{
+.button-container > div:active {
   opacity: .8;
 }
 
@@ -66,4 +66,12 @@ canvas {
 #dialog .dialog-button div {
   padding: 10px;
   background: rgba(204, 204, 204, .6);
+}
+
+#btn-about {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  width: 30px;
+  height: 30px;
 }

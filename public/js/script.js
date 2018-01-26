@@ -270,3 +270,12 @@ function reset() {
   over = false;
   me = true;
 }
+
+var about = document.getElementById('about');
+var btnAbout = document.getElementById('btn-about');
+btnAbout.onclick = function () {
+  about.showModal();
+};
+about.onclick = function () {
+  about.close();
+};
